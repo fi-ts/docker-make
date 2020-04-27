@@ -1,0 +1,2 @@
+class LintingException(Exception):
+    pass

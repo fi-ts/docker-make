@@ -1,0 +1,90 @@
+---
+version: '1'
+
+# the name of the docker image
+# required
+name: docker-make
+
+# the namespace in which the built image will be put
+# required
+username: acme
+
+# the registry host
+# required
+registry-host: registry.b.acme
+
+# the default name may also be defined in the builds section once
+# if the default build name is set, another tag with a git hash of the current git commit will be created
+# optional
+default-build-name: Latest Stable
+
+# a list of build arguments that are applied to every build
+# there is a list of meta variables that can be used (see bottom of this file)
+# optional
+default-build-args:
+  - http_proxy=${HTTP_PROXY}
+  - https_proxy=${HTTP_PROXY}
+
+# a list of labels that are set when building the docker image
+# default-labels may be overridden by build-labels
+# optional
+default-labels:
+  - customer="ACME"
+
+# a single command or a list of shell commands, which is / are executed before the builds
+before: echo "Before Action"
+
+# a single command or a list of shell commands, which is / are executed after the builds
+after:
+  - rm -rf tmp
+  - echo "Cleaned up"
+
+# the list of images to be built
+# at least one built needs to be specified
+# required
+builds:
+  -
+    # first build
+    #
+    # name of this build.
+    # if the name equals the default-build-name, it will additionally become labelled with a git hash created
+    # automatically from your working directory.
+    # required
+    name: Latest Stable
+    # tags for this image
+    # the tags have to be unique
+    # optional in case this build is the default-build (will be labelled with git hash), else required
+    tags:
+      - 1
+      - 1.1
+      - 1.1.0
+      - 1.1.0-acme
+    # build arguments
+    # these need to be referenced in your Dockerfile, i.e. with "ARG ARGUMENT_NAME" (otherwise the linting will fail)
+    # there is a list of meta variables that can be used (see bottom of this file)
+    # optional
+    build-args:
+      - DOCKER_MAKE_VERSION=1.1.0-acme
+    # a list of labels that are set when building the docker image for this particular build
+    # default-labels may be overridden by build-labels
+    # optional
+    labels:
+      - business-version=1.1
+    # a single command or a list of shell commands, which is / are executed before this particular build
+    # optional
+    before:
+    # a single command or a list of shell commands, which is / are executed after this particular build
+    # optional
+    after:
+  -
+    # second build
+    name: Next Development
+    tags:
+      - 1.2.0-acme
+    build-args:
+      - http_proxy=proxy.cloud.acme:3128
+      - DOCKER_MAKE_VERSION=1.2.0-acme
+
+# available meta variables:
+#   - DOCKER_MAKE_GIT_SHA1
+#   - DOCKER_MAKE_DATE

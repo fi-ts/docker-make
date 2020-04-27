@@ -1,0 +1,7 @@
+FROM centos:7
+
+LABEL maintainer Moin Hein <moin@hein.de>
+
+ARG V1
+ARG V2
+ARG V3

@@ -1,0 +1,7 @@
+*.py[co]
+.idea
+*.iml
+.coverage
+docker_make.egg-info/
+build
+dist

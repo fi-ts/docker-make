@@ -1,0 +1,22 @@
+# This dockerfile is just for testing, it does not make any sense.
+FROM alpine:latest
+MAINTAINER foo
+ADD something/from/here /
+ARG buildno=1
+CMD ls / | grep var
+COPY /a/b/c /d/e/f/../g
+ENV myName John Doe
+EXPOSE 42
+HEALTHCHECK --interval=5m --timeout=3s \
+  CMD curl -f http://localhost/ || exit 1
+LABEL description="This text illustrates \
+that label-values can span multiple lines."
+ONBUILD RUN /usr/local/bin/python-build --dir /app/src
+RUN powershell -command Write-Host default
+SHELL ["cmd", "/S"", "/C"]
+STOPSIGNAL 999
+USER patrick
+VOLUME ["/var/log/"]
+WORKDIR /path/to/workdir
+ENTRYPOINT ["top", "-b"]
+CMD ["-c"]

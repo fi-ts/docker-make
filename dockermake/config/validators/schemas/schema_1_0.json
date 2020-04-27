@@ -1,0 +1,35 @@
+{
+    "title": "docker-make",
+    "description": "Schema of a docker-make.yaml version 1",
+    "definitions": {
+        "builds": {
+            "type": "object",
+            "properties": {
+                "name": { "type": "string" },
+                "tags": { "type": "array", "items": { "type": ["number", "string"]} },
+                "labels": { "type": "array", "items": { "type": "string"} },
+                "build-args": { "type": "array", "items": { "type": "string"} },
+                "before": { "type": ["null", "string", "array"], "items": { "type": "string" } },
+                "after": { "type": ["null", "string", "array"], "items": { "type": "string" } }
+            },
+            "required": ["name"],
+            "additionalProperties": false
+        }
+    },
+    "type": "object",
+    "properties": {
+        "version": { "type": "string" },
+        "name": { "type": "string" },
+        "username": { "type": "string" },
+        "registry-host": { "type": "string" },
+        "name": { "type": "string" },
+        "default-build-name": { "type": "string" },
+        "default-build-args": { "type": "array", "items": { "type": "string" } },
+        "default-labels": { "type": "array", "items": { "type": "string" } },
+        "before": { "type": ["null", "string", "array"], "items": { "type": "string" } },
+        "after": { "type": ["null", "string", "array"], "items": { "type": "string" } },
+        "builds": { "type": "array", "items": { "$ref": "#/definitions/builds" }, "minItems": 1 }
+    },
+    "required": ["version", "name", "username", "registry-host", "builds"],
+    "additionalProperties": false
+}

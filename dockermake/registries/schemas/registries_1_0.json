@@ -1,0 +1,27 @@
+{
+    "title": "registries.yaml",
+    "description": "The registry inventory for docker-make",
+    "type": "object",
+    "properties": {
+        "registries": {
+            "type": "object",
+            "additionalProperties": {
+                "type": "object",
+                "properties": {
+                    "repositories": { "type": ["array", "null"], "items": { "type": "string" } },
+                    "auth": {
+                        "type": ["object", "null"],
+                        "properties": {
+                            "user": { "type": "string" },
+                            "password": { "type": "string" }
+                         }
+                    }
+                },
+                "required": ["repositories"],
+                "additionalProperties": false
+            }
+        }
+    },
+    "required": ["registries"],
+    "additionalProperties": false
+}

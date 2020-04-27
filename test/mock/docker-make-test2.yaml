@@ -1,0 +1,31 @@
+version: '1'
+name: ansible
+username: ${USERNAME}
+registry-host: registry.b.${USERNAME}
+builds:
+  -
+    name: Ansible 2.4.0.0
+    tags:
+      - 2.4.0-${ansible_components_version}${TAG_SUFFIX}
+      - 2.4.0${TAG_SUFFIX}
+      - 2.4${TAG_SUFFIX}
+    build-args:
+      - ANSIBLE_VERSION=2.4.0.0
+      - BOTO_VERSION=2.47
+      - WINRM_VERSION=0.2.2
+      - KERBEROS_VERSION=1.2.5
+      - JINJA2_VERSION=2.8.1
+      - ANSIBLE_TOKEN=${ANSIBLE_VERSION}
+  -
+    name: Ansible 2.3.2.0
+    tags:
+      - 2.3.2-${ansible_components_version}${TAG_SUFFIX}
+      - 2.3.2${TAG_SUFFIX}
+      - 2.3${TAG_SUFFIX}
+    build-args:
+      - ANSIBLE_VERSION=2.3.2.0
+      - BOTO_VERSION=2.47
+      - WINRM_VERSION=0.2.2
+      - KERBEROS_VERSION=1.2.5
+      - JINJA2_VERSION=2.8.1
+      - ANSIBLE_TOKEN=${ANSIBLE_VERSION}

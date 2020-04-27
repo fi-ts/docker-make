@@ -1,0 +1,9 @@
+---
+registries:
+  registry.a.com:
+    repositories:
+      - "github.com/namespace-a"
+      - "github.com/namespace-b"
+    auth:
+      user: a-user
+      password: a-password

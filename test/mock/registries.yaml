@@ -1,0 +1,11 @@
+---
+registries:
+  registry.a.com:
+    repositories:
+      - "registry.a.com/domain-a"
+      - "registry.a.com/domain-b"
+    auth:
+  registry.b.acme:
+    repositories:
+      - "registry.b.acme/domain-c"
+    auth:

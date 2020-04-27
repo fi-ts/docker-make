@@ -1,0 +1,18 @@
+version: '1'
+name: a-image-name
+username: a-namespace
+registry-host: registry.a.com
+default-build-name: Build version ${DEFAULT_VERSION}
+default-build-args:
+  - DEFAULT_VERSION=${NON_EXISTENT_ENV_VAR-1.0}
+  - VERSION=1
+builds:
+  - name: Build version ${DEFAULT_VERSION}
+    build-args:
+      - VERSION=overridden
+    tags:
+      - latest
+      - ${FIRST_VERSION}
+      - ${VERSION:-x}
+      - ${PATCH-1.1}
+      - $DEFAULT_VERSION

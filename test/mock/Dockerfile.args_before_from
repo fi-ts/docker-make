@@ -1,0 +1,3 @@
+ARG release=7
+ARG os=centos
+FROM ${os}:${release}
