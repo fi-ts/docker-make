@@ -10,11 +10,7 @@ The main features of docker-make are:
 
 ## Installation
 
-You can install docker-make by running:
-
-```
-pip install docker-make
-```
+docker-make is published as a fully self-contained binary on the [release page](https://github.com/fi-ts/docker-make/releases).
 
 ## Getting Started
 
