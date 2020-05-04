@@ -33,7 +33,7 @@ setup(
         "ConfigArgParse",
         "mock",
         "jsonschema>=2.6.0,<3",
-        "PyYAML>=3.12,<4",
+        "PyYAML>=5.3.1,<6",
         "pyparsing==2.3.0",
         "tabulate>=0.8.2,<1",
         "termcolor",
