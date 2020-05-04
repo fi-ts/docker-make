@@ -57,7 +57,7 @@ class GeneralRules(RulesBase):
         """FROM must point to an allowed registry: %s"""
         if not Registries().push_only_to_defined_registries:
             return
-        allowed_registries = Registries().get().keys()
+        allowed_registries = list(Registries().get().keys())
         if allowed_registries:
             instructions = self.dockerfile.get_instructions_of_type(Keywords.FROM)
             for instruction in instructions:

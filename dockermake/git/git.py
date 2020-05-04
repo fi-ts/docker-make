@@ -1,8 +1,5 @@
 import logging
-try:
-    import urlparse
-except ModuleNotFoundError:
-    import urllib.parse as urlparse
+import urllib.parse
 
 from dockermake.utils.helpers import System
 
@@ -23,7 +20,7 @@ def extract_git_repository(url):
     parts = []
 
     if url:
-        parsed_url = urlparse.urlparse(url)
+        parsed_url = urllib.parse.urlparse(url)
         if "@" in parsed_url.netloc:
             parts.append(parsed_url.netloc.split("@")[-1])
         else:

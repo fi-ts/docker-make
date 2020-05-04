@@ -2,9 +2,7 @@ from abc import ABCMeta
 import inspect
 
 
-class RulesBase:
-    __metaclass__ = ABCMeta
-
+class RulesBase(metaclass=ABCMeta):
     def __init__(self, dockerfile):
         self.dockerfile = dockerfile
         self.errors = []

@@ -8,8 +8,6 @@ from dockermake.utils.helpers import enum
 class ExecFormBase(InstructionBase, metaclass=ABCMeta):
     """Abstract base class for instructions that demand exec form arguments"""
 
-    __metaclass__ = ABCMeta
-
     QuotingType = enum('SINGLE', 'DOUBLE', 'BOTH')
     SINGLE_QUOTED_STRING = InstructionBase.pp_quoted(quote="'", unquote=True).setName("single quoted string")
     DOUBLE_QUOTED_STRING = InstructionBase.pp_quoted(unquote=True).setName("double quoted string")

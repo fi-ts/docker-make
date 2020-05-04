@@ -7,8 +7,6 @@ from dockermake.dockerfile.instructions.instruction_base import InstructionBase
 class AssignmentsFormBase(InstructionBase, metaclass=ABCMeta):
     """Abstract base class for instructions that demand an assignment form"""
 
-    __metaclass__ = ABCMeta
-
     def __init__(self, argument, physical_line_number=None):
         self.assignments = None
         super(AssignmentsFormBase, self).__init__(argument, physical_line_number=physical_line_number)
@@ -52,7 +50,7 @@ class AssignmentsFormBase(InstructionBase, metaclass=ABCMeta):
 
     def value_of(self, requested_key, ignore_case):
         if self.assignments:
-            for key, value in self.assignments.items():
+            for key, value in list(self.assignments.items()):
                 if (ignore_case and key.lower() == requested_key.lower()) or key == requested_key:
                     return value
         return None

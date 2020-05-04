@@ -19,7 +19,7 @@ class ArgTest(InstructionTest):
         instruction = Arg("A = 1")
 
         self.assertEqual(len(instruction.syntax_errors), 1)
-        self.assertRegexpMatches(
+        self.assertRegex(
             instruction.syntax_errors[0],
             'ARG instruction with argument "A = 1" is invalid: Expected end of text'
         )
@@ -28,7 +28,7 @@ class ArgTest(InstructionTest):
         instruction = Arg("A 3")
 
         self.assertEqual(len(instruction.syntax_errors), 1)
-        self.assertRegexpMatches(
+        self.assertRegex(
             instruction.syntax_errors[0],
             'ARG instruction with argument "A 3" is invalid: Expected end of text'
         )
@@ -37,7 +37,7 @@ class ArgTest(InstructionTest):
         instruction = Arg("A=3 B")
 
         self.assertEqual(len(instruction.syntax_errors), 1)
-        self.assertRegexpMatches(
+        self.assertRegex(
             instruction.syntax_errors[0],
             'ARG instruction with argument "A=3 B" is invalid: Expected end of text'
         )

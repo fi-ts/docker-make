@@ -16,5 +16,5 @@ class YamlLoaderTest(unittest.TestCase):
     def test_load_invalid_yaml(self):
         config_file = os.path.join(get_mock_dir(), "Dockerfile")
 
-        with self.assertRaisesRegexp(Exception, "Unable to parse .*Dockerfile.*"):
+        with self.assertRaisesRegex(Exception, "Unable to parse .*Dockerfile.*"):
             YamlLoader.safe_load_yaml(config_file)

@@ -222,7 +222,7 @@ class TestMake(unittest.TestCase):
         }
         make = self.create_make(args=["--no-pull"], dockerfile="Dockerfile.noargs", config=config)
 
-        with self.assertRaisesRegexp(Exception, "Not allowed to push to a-forbidden-registry: not defined "
+        with self.assertRaisesRegex(Exception, "Not allowed to push to a-forbidden-registry: not defined "
                                                 "in registries.yaml"):
             with patch("dockermake.utils.helpers.System._run_command", return_value=("", "", 0)):
                 make._run_docker_build_and_push_commands(make.config.get_builds()[0])

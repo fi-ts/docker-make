@@ -1,10 +1,7 @@
 import argparse
 from contextlib import contextmanager
 import os
-try:
-    from StringIO import StringIO
-except ImportError:
-    from io import StringIO
+from io import StringIO
 import sys
 
 from dockermake.lint.rules.general import GeneralRules

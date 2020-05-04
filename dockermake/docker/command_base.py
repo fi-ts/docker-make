@@ -6,9 +6,7 @@ from dockermake.constants import Constants
 from dockermake.utils.helpers import System
 
 
-class CommandBase:
-    __metaclass__ = ABCMeta
-
+class CommandBase(metaclass=ABCMeta):
     BASE = Constants.DOCKER_PATH
 
     def __init__(self, **kwargs):

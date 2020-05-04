@@ -244,7 +244,7 @@ class Config10Test(unittest.TestCase):
         }
         config_wrapper = Config10(config)
 
-        with self.assertRaisesRegexp(Exception, "Only-build-name not found in config: c-build"):
+        with self.assertRaisesRegex(Exception, "Only-build-name not found in config: c-build"):
             config_wrapper.narrow_down_builds_by_names(["c-build"])
 
     def test_narrow_down_builds_by_names_no_builds(self):

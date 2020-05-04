@@ -1,9 +1,7 @@
 from abc import ABCMeta, abstractmethod
 
 
-class DockerCliBase:
-    __metaclass__ = ABCMeta
-
+class DockerCliBase(metaclass=ABCMeta):
     @abstractmethod
     def build(self, path, **kwargs):
         raise NotImplementedError

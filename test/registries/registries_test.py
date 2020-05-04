@@ -62,7 +62,7 @@ class RegistriesTest(unittest.TestCase):
             self.registries.check_allowed_to_push("registry.a")
         except Exception as exception:
             self.fail("Expected to be able to push to registry.a: %s" % exception)
-        with self.assertRaisesRegexp(Exception, "Not allowed to push to docker.io: not defined in registries.yaml"):
+        with self.assertRaisesRegex(Exception, "Not allowed to push to docker.io: not defined in registries.yaml"):
             self.registries.check_allowed_to_push("docker.io")
 
     def test_check_allowed_to_push_without_special_config(self):
@@ -76,8 +76,8 @@ class RegistriesTest(unittest.TestCase):
     def test_check_allowed_to_push_git_project_only(self):
         self.registries.push_only_to_specific_projects = True
         self.registries.push_only_to_defined_registries = False
-        with self.assertRaisesRegexp(Exception, "Not allowed to push to docker.io: not defined in registries.yaml"):
+        with self.assertRaisesRegex(Exception, "Not allowed to push to docker.io: not defined in registries.yaml"):
             self.registries.check_allowed_to_push("docker.io")
-        with self.assertRaisesRegexp(Exception, "Not allowed to push to registry\.a: Repository .* "
+        with self.assertRaisesRegex(Exception, "Not allowed to push to registry\.a: Repository .* "
                                                 "not defined in registries\.yaml"):
             self.registries.check_allowed_to_push("registry.a")

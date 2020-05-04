@@ -63,7 +63,7 @@ class FromTest(InstructionTest):
         instruction = From("")
 
         self.assertEqual(len(instruction.syntax_errors), 1)
-        self.assertRegexpMatches(
+        self.assertRegex(
             instruction.syntax_errors[0],
             'FROM instruction with argument "" is invalid. Expected word without the characters "/", ":" .*'
         )

@@ -92,7 +92,7 @@ class System:
 
 
 def dockerfile_keyword(**enums):
-    reverse = dict((value, key) for key, value in enums.items())
+    reverse = dict((value, key) for key, value in list(enums.items()))
     enums["list"] = sorted(enums.keys())
     enums["mapping"] = enums
     enums["reverse_mapping"] = reverse
@@ -100,7 +100,7 @@ def dockerfile_keyword(**enums):
 
 
 def enum(*sequential, **named):
-    enums = dict(zip(sequential, range(len(sequential))), **named)
+    enums = dict(list(zip(sequential, list(range(len(sequential))))), **named)
     return type('Enum', (), enums)
 
 

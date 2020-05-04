@@ -4,9 +4,7 @@ import json
 from dockermake.utils import display
 
 
-class ConfigBase:
-    __metaclass__ = ABCMeta
-
+class ConfigBase(metaclass=ABCMeta):
     def __init__(self, config, cli_args=None):
         self.meta_build_args = dict()
         self.populated_meta_build_args = dict()
@@ -86,7 +84,7 @@ class ConfigBase:
         """
         Add metadata build arguments to the configuration, but only if the argument is mentioned in the Dockerfile.
         """
-        for name, arg in self.meta_build_args.items():
+        for name, arg in list(self.meta_build_args.items()):
             if callable(arg):
                 value = arg()
             else:
@@ -120,6 +118,6 @@ class ConfigBase:
             distinct[key] = value
 
         unique_list = list()
-        for key, value in distinct.items():
+        for key, value in list(distinct.items()):
             unique_list.append(key + "=" + value)
         return unique_list

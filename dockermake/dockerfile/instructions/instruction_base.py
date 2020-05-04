@@ -6,10 +6,8 @@ from dockermake.dockerfile.instructions import get_keyword_from_class
 pp.ParserElement.enablePackrat()
 
 
-class InstructionBase:
+class InstructionBase(metaclass=ABCMeta):
     """Abstract base class for all Instructions"""
-
-    __metaclass__ = ABCMeta
 
     def __init__(self, argument, physical_line_number=None):
         self.argument = argument

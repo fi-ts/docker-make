@@ -62,7 +62,7 @@ class InterpolationTest(unittest.TestCase):
         os.environ.pop("MY_NAME_IS", None)
         replacement_dict = os.environ
 
-        with self.assertRaisesRegexp(Exception, "Environment variable 'MY_NAME_IS' was required but had no value."):
+        with self.assertRaisesRegex(Exception, "Environment variable 'MY_NAME_IS' was required but had no value."):
             PosixStyleExpander.expand(template_string, replacement_dict)
 
     def test_render_evalutes_multiple_variable_references(self):
