@@ -3,7 +3,7 @@ import os
 from setuptools import setup, find_packages
 from dockermake.version import VERSION
 
-with open(os.path.join(os.path.dirname(__file__), "README.md", encoding='UTF-8')) as readme:
+with open(os.path.join(os.path.dirname(__file__), "README.md"), encoding='UTF-8') as readme:
     long_description = readme.read()
 
 setup(
