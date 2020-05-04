@@ -99,6 +99,6 @@ def enum(*sequential, **named):
 
 
 def load_json(path):
-    with open(path, 'r') as stream:
+    with open(path, 'r', encoding='UTF-8') as stream:
         data = stream.read()
     return json.loads(data)

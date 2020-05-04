@@ -28,7 +28,6 @@ jobs:
           python -m pip install pyinstaller setuptools --upgrade
           python -m pip freeze
           python setup.py sdist
-          python setup.py bdist_rpm --release ${TAG_NAME}
           pyinstaller docker-make.spec
           ./dist/docker-make -v
 

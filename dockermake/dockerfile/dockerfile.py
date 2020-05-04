@@ -24,7 +24,7 @@ class Dockerfile:
     def load_from_file_path(dockerfile_path):
         if not os.path.isfile(dockerfile_path):
             raise Exception("Dockerfile not found at %s" % dockerfile_path)
-        with open(dockerfile_path, 'r') as dockerfile:
+        with open(dockerfile_path, 'r', encoding='UTF-8') as dockerfile:
             context = dockerfile.read()
             logging.debug("Read dockerfile from: %s", dockerfile_path)
         dockerfile = Dockerfile._parse(context)
