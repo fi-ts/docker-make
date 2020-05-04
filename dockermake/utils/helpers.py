@@ -1,5 +1,6 @@
 import json
 import logging
+import io
 import os
 import subprocess
 import sys
@@ -52,19 +53,13 @@ class System:
 
     @staticmethod
     def _with_continuous_output(cmd, shell, cwd):
-        process = subprocess.Popen(cmd, stdout=subprocess.PIPE, shell=shell, bufsize=1, cwd=cwd, env=os.environ,
-                                   encoding='UTF-8')
+        process = subprocess.Popen(cmd, stdout=subprocess.PIPE, shell=shell, bufsize=1, cwd=cwd, env=os.environ)
         err = None
         out = ""
-        while True:
-            partial_out = process.stdout.readline().strip()
-            if partial_out == "" and process.poll() is not None:
-                break
-            if partial_out:
-                out += partial_out
-                display.info(partial_out)
-                sys.stdout.flush()
-        return_code = process.poll()
+        for line in io.TextIOWrapper(process.stdout, encoding="utf-8"):
+            out += line
+            display.info(line.rstrip())
+        return_code = process.wait()
         out, err = System._clean_outputs(out, err)
         return out, err, return_code
 
