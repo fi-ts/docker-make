@@ -3,7 +3,6 @@ import logging
 import io
 import os
 import subprocess
-import sys
 
 from dockermake.utils import display
 
