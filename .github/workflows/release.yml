@@ -30,7 +30,6 @@ jobs:
           python setup.py sdist
           pyinstaller docker-make.spec
           ./dist/docker-make -v
-
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1.0.0

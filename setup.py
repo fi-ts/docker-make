@@ -46,6 +46,6 @@ setup(
             "setuptools-lint"
         ]
     ),
-    scripts=["bin/docker-make"],
+    data_files=[('bin', ['docker-make'])],
     test_suite="test"
 )
