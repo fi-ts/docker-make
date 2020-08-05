@@ -52,7 +52,7 @@ class System:
 
     @staticmethod
     def _with_continuous_output(cmd, shell, cwd):
-        process = subprocess.Popen(cmd, stdout=subprocess.PIPE, shell=shell, bufsize=1, cwd=cwd, env=os.environ)
+        process = subprocess.Popen(cmd, stdout=subprocess.PIPE, shell=shell, cwd=cwd, env=os.environ)
         err = None
         out = ""
         for line in io.TextIOWrapper(process.stdout, encoding="utf-8"):
