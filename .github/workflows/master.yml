@@ -35,7 +35,7 @@ jobs:
           md5sum ./dist/docker-make > dist/docker-make.md5
       - name: Build Alpine Linux
         run: |
-          docker build -f ci-build/Dockerfile.alpine -t metalstack/docker-make:alpine
+          docker build -f ci-build/Dockerfile.alpine . -t metalstack/docker-make:alpine
           docker cp $(docker create $(docker image ls --format '{{ .ID }}' | sed -n 1p)):/docker-make dist/docker-make-musl
           md5sum dist/docker-make-musl > dist/docker-make-musl.md5
       - name: Publish Dockerfiles
