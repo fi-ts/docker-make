@@ -52,12 +52,15 @@ class System:
 
     @staticmethod
     def _with_continuous_output(cmd, shell, cwd):
-        process = subprocess.Popen(cmd, stdout=subprocess.PIPE, shell=shell, bufsize=1, cwd=cwd, env=os.environ)
+        process = subprocess.Popen(cmd, stdout=subprocess.PIPE, shell=shell, cwd=cwd, env=os.environ)
         err = None
         out = ""
         for line in io.TextIOWrapper(process.stdout, encoding="utf-8"):
             out += line
-            display.info(line.rstrip())
+            try:
+                display.info(line.rstrip())
+            except UnicodeEncodeError as exception:
+                logging.error("error displaying parts of the output: %s", exception)
         return_code = process.wait()
         out, err = System._clean_outputs(out, err)
         return out, err, return_code
