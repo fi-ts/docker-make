@@ -59,8 +59,8 @@ class System:
             out += line
             try:
                 display.info(line.rstrip())
-            except UnicodeEncodeError as e:
-                logging.error("error displaying parts of the output: %s", e)
+            except UnicodeEncodeError as exception:
+                logging.error("error displaying parts of the output: %s", exception)
         return_code = process.wait()
         out, err = System._clean_outputs(out, err)
         return out, err, return_code

@@ -62,7 +62,8 @@ class GeneralRules(RulesBase):
             instructions = self.dockerfile.get_instructions_of_type(Keywords.FROM)
             for instruction in instructions:
                 if instruction.registry not in allowed_registries:
-                    self.error(self.rule2, substitution=list(allowed_registries), line_number=instruction.physical_line_number)
+                    self.error(self.rule2, substitution=list(allowed_registries),
+                               line_number=instruction.physical_line_number)
 
     def rule3(self):
         """FROM must point to a username"""

@@ -9,8 +9,11 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
-        uses: actions/checkout@master
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Docker Login
+        run: |
+          docker login -u ${{ secrets.DOCKER_HUB_USER }} -p ${{ secrets.DOCKER_HUB_TOKEN }}
       - uses: actions/setup-python@v1
         with:
           python-version: '3.8.5'
@@ -23,13 +26,25 @@ jobs:
           python -m pip install .[dev]
           python setup.py lint --lint-packages dockermake
           python setup.py nosetests
-      - name: Build
+      - name: Build Linux
         run: |
           python -m pip install pyinstaller setuptools --upgrade
           python -m pip freeze
           python setup.py sdist
           pyinstaller docker-make.spec
           ./dist/docker-make -v
+          docker build -f ci-build/Dockerfile . -t metalstack/docker-make:${TAG_NAME}
+          md5sum ./dist/docker-make > dist/docker-make.md5
+      - name: Build Alpine Linux
+        run: |
+          docker build -f ci-build/Dockerfile.alpine -t metalstack/docker-make:${TAG_NAME}-alpine
+          docker cp $(docker create $(docker image ls --format '{{ .ID }}' | sed -n 1p)):/docker-make dist/docker-make-musl
+          md5sum dist/docker-make-musl > dist/docker-make-musl.md5
+      - name: Publish Dockerfiles
+        run: |
+          docker login -u ${{ secrets.DOCKER_HUB_USER }} -p ${{ secrets.DOCKER_HUB_TOKEN }}
+          docker push metalstack/docker-make:${TAG_NAME}
+          docker push metalstack/docker-make:${TAG_NAME}-alpine
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1.0.0
@@ -48,4 +63,31 @@ jobs:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_path: dist/docker-make
           asset_name: docker-make-linux-amd64
+          asset_content_type: application/octet-stream
+      - name: Upload Release Asset
+        uses: actions/upload-release-asset@v1.0.1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: dist/docker-make.md5
+          asset_name: docker-make-linux-amd64.md5
+          asset_content_type: application/octet-stream
+      - name: Upload Release Asset
+        uses: actions/upload-release-asset@v1.0.1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: dist/docker-make-musl
+          asset_name: docker-make-linux-musl-amd64
+          asset_content_type: application/octet-stream
+      - name: Upload Release Asset
+        uses: actions/upload-release-asset@v1.0.1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: dist/docker-make-musl.md5
+          asset_name: docker-make-linux-musl-amd64.md5
           asset_content_type: application/octet-stream
