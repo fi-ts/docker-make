@@ -57,7 +57,10 @@ class System:
         out = ""
         for line in io.TextIOWrapper(process.stdout, encoding="utf-8"):
             out += line
-            display.info(line.rstrip())
+            try:
+                display.info(line.rstrip())
+            except UnicodeEncodeError as e:
+                logging.error("error displaying parts of the output: %s", e)
         return_code = process.wait()
         out, err = System._clean_outputs(out, err)
         return out, err, return_code
