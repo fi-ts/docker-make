@@ -25,21 +25,13 @@ jobs:
           python setup.py nosetests
       - name: Build Linux
         run: |
-          python -m pip install pyinstaller setuptools --upgrade
-          python -m pip freeze
-          python setup.py sdist
-          python setup.py bdist_rpm --release ${TAG_NAME}
-          pyinstaller docker-make.spec
-          ./dist/docker-make -v
           docker build -f ci-build/Dockerfile . -t metalstack/docker-make:latest
-          md5sum ./dist/docker-make > dist/docker-make.md5
-      - name: Build Alpine Linux
-        run: |
-          docker build -f ci-build/Dockerfile.alpine . -t metalstack/docker-make:alpine
-          docker cp $(docker create $(docker image ls --format '{{ .ID }}' | sed -n 1p)):/docker-make dist/docker-make-musl
-          md5sum dist/docker-make-musl > dist/docker-make-musl.md5
+          docker cp $(docker create $(docker image ls --format '{{ .ID }}' | sed -n 1p)):/docker-make docker-make
+          md5sum docker-make > docker-make.md5
       - name: Publish Dockerfiles
         run: |
           docker login -u ${{ secrets.DOCKER_HUB_USER }} -p ${{ secrets.DOCKER_HUB_TOKEN }}
           docker push metalstack/docker-make:latest
-          docker push metalstack/docker-make:alpine
+      - uses: release-drafter/release-drafter@v5
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
