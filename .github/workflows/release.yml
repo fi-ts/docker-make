@@ -28,13 +28,13 @@ jobs:
           python setup.py nosetests
       - name: Build Linux
         run: |
-          docker build -f ci-build/Dockerfile . -t metalstack/docker-make:${TAG_NAME}
+          docker build -f ci-build/Dockerfile . -t metalstack/docker-make:v${TAG_NAME}
           docker cp $(docker create $(docker image ls --format '{{ .ID }}' | sed -n 1p)):/docker-make docker-make
           md5sum docker-make > docker-make.md5
       - name: Publish Dockerfiles
         run: |
           docker login -u ${{ secrets.DOCKER_HUB_USER }} -p ${{ secrets.DOCKER_HUB_TOKEN }}
-          docker push metalstack/docker-make:${TAG_NAME}
+          docker push metalstack/docker-make:v${TAG_NAME}
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1.0.0
