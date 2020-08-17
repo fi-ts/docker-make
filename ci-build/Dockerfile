@@ -4,8 +4,8 @@ RUN apt update && apt install -y busybox musl musl-dev musl-tools liblzma-dev sc
 WORKDIR /app
 COPY . .
 RUN python3 -m pip install staticx pyinstaller .
-RUN pyinstaller -F docker-make.spec \
- && staticx /app/dist/docker-make /app/dist/docker-make-static \
+RUN pyinstaller --log-level DEBUG -F docker-make.spec \
+ && staticx --debug /app/dist/docker-make /app/dist/docker-make-static \
  && /app/dist/docker-make-static -v
 
 FROM docker
