@@ -52,7 +52,7 @@ class System:
 
     @staticmethod
     def _with_continuous_output(cmd, shell, cwd):
-        process = subprocess.Popen(cmd, stdout=subprocess.PIPE, shell=shell, cwd=cwd, env=os.environ)
+        process = subprocess.Popen(cmd, stdout=subprocess.PIPE, shell=shell, cwd=cwd, env=System._get_exec_env())
         err = None
         out = ""
         for line in io.TextIOWrapper(process.stdout, encoding="utf-8"):
@@ -68,12 +68,21 @@ class System:
     @staticmethod
     def _without_continuous_output(cmd, shell, cwd, stdin_feed):
         process = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, stdin=subprocess.PIPE,
-                                   shell=shell, cwd=cwd, env=os.environ, encoding='UTF-8')
+                                   shell=shell, cwd=cwd, env=System._get_exec_env(), encoding='UTF-8')
         out, err = process.communicate(input=stdin_feed)
         return_code = process.returncode
         out, err = System._clean_outputs(out, err)
         logging.debug("Command output was: %s", out)
         return out, err, return_code
+
+    @staticmethod
+    def _get_exec_env():
+        env = os.environ.copy()
+        # removing library paths from pyinstaller, see:
+        # https://pyinstaller.readthedocs.io/en/stable/runtime-information.html#ld-library-path-libpath-considerations
+        env.pop('LD_LIBRARY_PATH', None)
+        env.pop('LIBPATH', None)
+        return env
 
     @staticmethod
     def _clean_outputs(out, err):
