@@ -8,7 +8,7 @@ except ImportError:
     HAS_TERMCOLOR = False
 
 
-def info(msg, color="white", end="\n"):
+def info(msg, color=None, end="\n"):
     print(_try_color(msg, color), end=end)
 
 
